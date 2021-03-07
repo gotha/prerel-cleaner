@@ -69,7 +69,6 @@ keep - (0.0.1) 0.0.1
 # keep| k - keep release and tag
 # del| d - delete both release and tag
 # rel| r - delete release but keep the tag
-# rel| r - delete release but keep the tag
 ```
 
 Change the file like this:
