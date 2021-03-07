@@ -13,7 +13,25 @@ go build
 
 ## Install
 
+### Prerequisites
+
 You need to have git installed.
+
+### Auth
+
+The easiest authentication method is to create file `~/.config/hub` with the following content
+
+```
+github.com:
+- user: gotha
+  oauth_token: <YOUR_GITHUB_TOKEN>
+  protocol: https
+```
+
+Otherwise you will be asked for username and password every time.
+
+
+### Get the binary
 
 You can either install with:
 
