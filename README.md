@@ -15,10 +15,15 @@ go build
 
 You need to have git installed.
 
-Copy the binary in your exec path
+You can either install with:
 
-Ex:
-```cp
+```sh
+go install github.com/gotha/prerel-cleaner@latest
+```
+
+or get the code, build it yourself and copy the binary in your exec path
+
+```sh
 cp prerel-cleaner /usr/local/bin
 ```
 
