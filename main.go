@@ -81,7 +81,11 @@ func writeTemplate(str string) (string, error) {
 
 func openFileInEditor(fileName string) error {
 
-	editor := os.Getenv("EDITOR")
+	editorEnvvar := os.Getenv("EDITOR")
+	items := strings.Split(editorEnvvar, " ")
+	editor := items[0]
+	args := append(items[1:], fileName)
+
 	if editor == "" {
 		editor = defaultEditor
 	}
@@ -91,7 +95,7 @@ func openFileInEditor(fileName string) error {
 		return err
 	}
 
-	cmd := exec.Command(executable, fileName)
+	cmd := exec.Command(executable, args...)
 	cmd.Stdin = os.Stdin
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
