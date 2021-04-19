@@ -22,10 +22,14 @@ const helpTemplate = `
 # rel| r - delete release but keep the tag
 `
 
-var releasesLimit int
+var (
+	releasesLimit int
+	autoMark      bool
+)
 
 func init() {
 	flag.IntVar(&releasesLimit, "limit", 50, "number of releases to show")
+	flag.BoolVar(&autoMark, "auto", false, "automatically mark pre-releases for deletion")
 	flag.Parse()
 }
 
@@ -50,6 +54,7 @@ func createTemplate(releases []github.Release) string {
 	output := ""
 	for _, rel := range releases {
 		draftString := ""
+		action := "keep"
 		if rel.Draft == true {
 			draftString = "[DRAFT] "
 		}
@@ -57,8 +62,11 @@ func createTemplate(releases []github.Release) string {
 		preRelString := ""
 		if rel.Prerelease == true {
 			preRelString = "[PRERELEASE] "
+			if autoMark {
+				action = "del"
+			}
 		}
-		output = fmt.Sprintf("%skeep - %s%s(%s) %s\n", output, draftString, preRelString, rel.TagName, rel.Name)
+		output = fmt.Sprintf("%s%s - %s%s(%s) %s\n", output, action, draftString, preRelString, rel.TagName, rel.Name)
 	}
 
 	return fmt.Sprintf("%s%s", output, helpTemplate)
